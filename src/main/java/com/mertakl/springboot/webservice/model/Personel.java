@@ -1,5 +1,6 @@
 package com.mertakl.springboot.webservice.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -20,8 +21,8 @@ public class Personel extends UserDateAudit {
 	@NotNull
 	private PersonelTuru turKodu;
 
-	
-	private String uyrukUlke;
+	@OneToOne(cascade=CascadeType.ALL)
+	private Country uyrukUlke;
 
 	@NotNull
 	@Size(max = 50)
@@ -54,7 +55,7 @@ public class Personel extends UserDateAudit {
 
 	}
 
-	public Personel(@NotNull PersonelTuru turKodu, @NotNull @Size(max = 50) String uyrukUlke,
+	public Personel(@NotNull PersonelTuru turKodu, @NotNull @Size(max = 50) Country uyrukUlke,
 			@NotNull @Size(max = 50) String tcKimlikPasaportNo, @NotNull Cinsiyet cinsiyet,
 			@NotNull @Size(max = 100) String adi, @NotNull @Size(max = 100) String soyadi,
 			@NotNull @Size(max = 100) String telefon, @NotNull @Size(max = 200) String adres, Sefer sefer) {
@@ -78,11 +79,11 @@ public class Personel extends UserDateAudit {
 		this.turKodu = turKodu;
 	}
 
-	public String getUyrukUlke() {
+	public Country getUyrukUlke() {
 		return uyrukUlke;
 	}
 
-	public void setUyrukUlke(String uyrukUlke) {
+	public void setUyrukUlke(Country uyrukUlke) {
 		this.uyrukUlke = uyrukUlke;
 	}
 

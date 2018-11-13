@@ -45,12 +45,11 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 	UdhbUtils utils = new UdhbUtils();
 
 	@Override
-	public String yolcuGrupEkle(Long grupId, Long yolcuId) {
+	public String yolcuGrupEkle(Long yolcuId, Long grupId) {
 		utils.credientials();
 
-		Grup grup = grupRepository.findById(grupId).get();
-
 		Yolcu yolcu = yolcuRepository.findById(yolcuId).get();
+		Grup grup = grupRepository.findById(grupId).get();
 
 		UetdsAriziSeferYolcuBilgileriInput input = new UetdsAriziSeferYolcuBilgileriInput();
 		input.setAdi(yolcu.getAdi());
@@ -60,7 +59,7 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 		input.setSoyadi(yolcu.getSoyadi());
 		input.setTcKimlikPasaportNo(yolcu.getTcKimlikPasaportNo());
 		input.setTelefonNo(yolcu.getTelefonNo());
-		input.setUyrukUlke(yolcu.getUyrukUlke());
+		input.setUyrukUlke(yolcu.getUyrukUlke().getCountryName());
 
 		UetdsAriziYolcuIslemSonuc sonuc = utils.port.yolcuEkle(utils.kullaniciBilgileri(),
 				grup.getSefer().getUetdsSeferReferansNo(), input);
@@ -83,17 +82,18 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 	}
 
 	@Override
-	public String yolcuIptal(Long yolcuId, String iptalAciklama, Yolcu yolcuDetails) {
+	public String yolcuIptal(Long id, String iptalAciklama) {
 		utils.credientials();
-		Yolcu yolcu = yolcuRepository.findById(yolcuId).get();
+		Yolcu yolcu = yolcuRepository.findById(id).get();
 		UetdsAriziYolcuIptalInput input = new UetdsAriziYolcuIptalInput();
 		input.setIptalAciklama(iptalAciklama);
-		input.setKoltukNo(yolcuDetails.getKoltukNo());
-		input.setYolcuTCKimlikPasaportNo(yolcuDetails.getTcKimlikPasaportNo());
+		input.setKoltukNo(yolcu.getKoltukNo());
+		input.setYolcuTCKimlikPasaportNo(yolcu.getTcKimlikPasaportNo());
 		UetdsGenelIslemSonuc sonuc = utils.port.yolcuIptal(utils.kullaniciBilgileri(),
 				yolcu.getGrup().getSefer().getUetdsSeferReferansNo(), input);
 		if (sonuc.getSonucKodu() == 0) {
 			yolcu.setDurum(AktifPasif.PASIF);
+			yolcuRepository.save(yolcu);
 			return sonuc.getSonucMesaji();
 		} else {
 			return "An error occured " + sonuc.getSonucMesaji();
@@ -101,7 +101,7 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 	}
 
 	@Override
-	public String yolcuIptal(Long yolcuId, String iptalAciklama) {
+	public String yolcuIptalUetdsYolcuRefNoIle(Long yolcuId, String iptalAciklama) {
 
 		utils.credientials();
 		Yolcu yolcu = yolcuRepository.findById(yolcuId).get();
@@ -112,6 +112,7 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 
 		if (sonuc.getSonucKodu() == 0) {
 			yolcu.setDurum(AktifPasif.PASIF);
+			yolcuRepository.save(yolcu);
 			return sonuc.getSonucMesaji();
 		} else {
 			return "An error occured " + sonuc.getSonucMesaji();
@@ -158,6 +159,7 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 
 		if (sonuc.getSonucKodu() == 0) {
 			bagaj.setDurum(AktifPasif.PASIF);
+			bagajRepository.save(bagaj);
 			return sonuc.getSonucMesaji();
 		} else {
 			return "An error occured " + sonuc.getSonucMesaji();
@@ -165,9 +167,9 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 	}
 
 	@Override
-	public Yolcu updateYolcu(Long yolcuId, Yolcu yolcuDetails) {
+	public Yolcu updateYolcu(Yolcu yolcuDetails) {
 
-		Yolcu yolcu = yolcuRepository.findById(yolcuId).get();
+		Yolcu yolcu = yolcuRepository.findById(yolcuDetails.getId()).get();
 		yolcu.setAdi(yolcuDetails.getAdi());
 		yolcu.setCinsiyet(yolcuDetails.getCinsiyet());
 		yolcu.setDurum(yolcuDetails.getDurum());
@@ -190,7 +192,9 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 
 	@Override
 	public Yolcu yolcuEkle(Yolcu yolcu) {
+		yolcu.setDurum(AktifPasif.AKTIF);
 		return yolcuRepository.save(yolcu);
 	}
+
 
 }

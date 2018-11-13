@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mertakl.springboot.webservice.audit.DateAudit;
 
 @Entity
@@ -19,7 +20,7 @@ public class District {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "district_code")
 	private Long districtCode;
 
@@ -27,16 +28,28 @@ public class District {
 	private String districtName;
 
 	@ManyToOne
-	private City city;
+	@JsonIgnore
+	City city;
 
 	public District() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public District(Long districtCode, String districtName, City city) {
+	public District(Long id, Long districtCode, String districtName, City city) {
 		super();
+		this.id = id;
 		this.districtCode = districtCode;
 		this.districtName = districtName;
 		this.city = city;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getDistrictCode() {

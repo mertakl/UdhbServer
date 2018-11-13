@@ -1,7 +1,9 @@
 package com.mertakl.springboot.webservice.model;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,7 +14,7 @@ import com.mertakl.springboot.webservice.audit.UserDateAudit;
 @Entity
 @Table(name = "grup")
 public class Grup extends UserDateAudit {
-	@NotNull
+	
 	private String uetdsGrupRefNo;
 
 	@NotBlank
@@ -23,25 +25,27 @@ public class Grup extends UserDateAudit {
 	@Size(max = 250)
 	private String grupAciklama;
 
-	@NotBlank
-	@Size(max = 100)
-	private String baslangicUlke;
+	@OneToOne
+	private Country baslangicUlke;
 
-	private Long baslangicIl;
+	@OneToOne
+	private City baslangicIl;
 
-	private Long baslangicIlce;
+	@OneToOne
+	private District baslangicIlce;
 
 	@NotBlank
 	@Size(max = 100)
 	private String baslangicYer;
 
-	@NotBlank
-	@Size(max = 100)
-	private String bitisUlke;
+	@OneToOne
+	private Country bitisUlke;
 
-	private Long bitisIl;
+	@OneToOne
+	private City bitisIl;
 
-	private Long bitisIlce;
+	@OneToOne
+	private District bitisIlce;
 
 	@NotBlank
 	private String bitisYer;
@@ -53,11 +57,10 @@ public class Grup extends UserDateAudit {
 
 	}
 
-	public Grup(@NotBlank @Size(max = 100) String uetdsGrupRefNo, @NotBlank @Size(max = 100) String grupAdi,
-			@NotBlank @Size(max = 250) String grupAciklama, @NotBlank @Size(max = 100) String baslangicUlke,
-			@NotBlank Long baslangicIl, @NotBlank Long baslangicIlce, @NotBlank @Size(max = 100) String baslangicYer,
-			@NotBlank @Size(max = 100) String bitisUlke, @NotBlank Long bitisIl, @NotBlank Long bitisIlce,
-			@NotBlank String bitisYer, Sefer sefer) {
+	public Grup(@NotNull String uetdsGrupRefNo, @NotBlank @Size(max = 100) String grupAdi,
+			@NotBlank @Size(max = 250) String grupAciklama, Country baslangicUlke, City baslangicIl,
+			District baslangicIlce, @NotBlank @Size(max = 100) String baslangicYer, Country bitisUlke, City bitisIl,
+			District bitisIlce, @NotBlank String bitisYer, Sefer sefer) {
 		super();
 		this.uetdsGrupRefNo = uetdsGrupRefNo;
 		this.grupAdi = grupAdi;
@@ -97,27 +100,27 @@ public class Grup extends UserDateAudit {
 		this.grupAciklama = grupAciklama;
 	}
 
-	public String getBaslangicUlke() {
+	public Country getBaslangicUlke() {
 		return baslangicUlke;
 	}
 
-	public void setBaslangicUlke(String baslangicUlke) {
+	public void setBaslangicUlke(Country baslangicUlke) {
 		this.baslangicUlke = baslangicUlke;
 	}
 
-	public Long getBaslangicIl() {
+	public City getBaslangicIl() {
 		return baslangicIl;
 	}
 
-	public void setBaslangicIl(Long baslangicIl) {
+	public void setBaslangicIl(City baslangicIl) {
 		this.baslangicIl = baslangicIl;
 	}
 
-	public Long getBaslangicIlce() {
+	public District getBaslangicIlce() {
 		return baslangicIlce;
 	}
 
-	public void setBaslangicIlce(Long baslangicIlce) {
+	public void setBaslangicIlce(District baslangicIlce) {
 		this.baslangicIlce = baslangicIlce;
 	}
 
@@ -129,27 +132,27 @@ public class Grup extends UserDateAudit {
 		this.baslangicYer = baslangicYer;
 	}
 
-	public String getBitisUlke() {
+	public Country getBitisUlke() {
 		return bitisUlke;
 	}
 
-	public void setBitisUlke(String bitisUlke) {
+	public void setBitisUlke(Country bitisUlke) {
 		this.bitisUlke = bitisUlke;
 	}
 
-	public Long getBitisIl() {
+	public City getBitisIl() {
 		return bitisIl;
 	}
 
-	public void setBitisIl(Long bitisIl) {
+	public void setBitisIl(City bitisIl) {
 		this.bitisIl = bitisIl;
 	}
 
-	public Long getBitisIlce() {
+	public District getBitisIlce() {
 		return bitisIlce;
 	}
 
-	public void setBitisIlce(Long bitisIlce) {
+	public void setBitisIlce(District bitisIlce) {
 		this.bitisIlce = bitisIlce;
 	}
 
@@ -165,8 +168,8 @@ public class Grup extends UserDateAudit {
 		return sefer;
 	}
 
-	public void setSefer(Sefer seferId) {
-		this.sefer = seferId;
+	public void setSefer(Sefer sefer) {
+		this.sefer = sefer;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.mertakl.springboot.webservice.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -25,11 +26,11 @@ import com.mertakl.springboot.webservice.enums.Cinsiyet;
 @Table(name = "yolcu")
 public class Yolcu extends UserDateAudit {
 
-	@NotBlank
 	@Size(max = 100)
 	private String uetdsYolcuRefNo;
 
-	private String uyrukUlke;
+	@OneToOne(cascade=CascadeType.MERGE)
+	private Country uyrukUlke;
 
 	@NotNull
 	private Cinsiyet cinsiyet;
@@ -54,7 +55,7 @@ public class Yolcu extends UserDateAudit {
 	@Size(max = 20)
 	private String telefonNo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "yolcu_grup", joinColumns = @JoinColumn(name = "yolcu_id"), inverseJoinColumns = @JoinColumn(name = "grup_id"))
 	private Grup grup;
 
@@ -63,7 +64,7 @@ public class Yolcu extends UserDateAudit {
 	public Yolcu() {
 	}
 
-	public Yolcu(@NotBlank @Size(max = 100) String uetdsYolcuRefNo, @NotBlank @Size(max = 100) String uyrukUlke,
+	public Yolcu(@NotBlank @Size(max = 100) String uetdsYolcuRefNo, @NotBlank @Size(max = 100) Country uyrukUlke,
 			@NotNull Cinsiyet cinsiyet, @NotBlank @Size(max = 100) String tcKimlikPasaportNo,
 			@NotBlank @Size(max = 100) String adi, @NotBlank @Size(max = 100) String soyadi,
 			@NotBlank @Size(max = 10) String koltukNo, @NotBlank @Size(max = 20) String telefonNo, Grup grup,
@@ -89,11 +90,11 @@ public class Yolcu extends UserDateAudit {
 		this.uetdsYolcuRefNo = uetdsYolcuRefNo;
 	}
 
-	public String getUyrukUlke() {
+	public Country getUyrukUlke() {
 		return uyrukUlke;
 	}
 
-	public void setUyrukUlke(String uyrukUlke) {
+	public void setUyrukUlke(Country uyrukUlke) {
 		this.uyrukUlke = uyrukUlke;
 	}
 

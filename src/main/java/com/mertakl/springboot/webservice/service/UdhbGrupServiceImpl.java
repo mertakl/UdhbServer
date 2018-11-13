@@ -1,6 +1,8 @@
 package com.mertakl.springboot.webservice.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,22 +28,22 @@ public class UdhbGrupServiceImpl implements UdhbGrupService {
 	GrupRepository grupRepository;
 
 	@Override
-	public String seferGrupEkle(Long seferId, Long grupId) {
+	public String seferGrupEkle(Grup grup) {
 		utils.credientials();
-		Grup grup = grupRepository.findById(grupId).get();
+	
 		UetdsAriziGrupBilgileriInput input = new UetdsAriziGrupBilgileriInput();
-		input.setBaslangicIl(grup.getBaslangicIl());
-		input.setBaslangicIlce(grup.getBaslangicIlce());
-		input.setBaslangicUlke(grup.getBaslangicUlke());
+		input.setBaslangicIl(grup.getBaslangicIl().getCityCode());
+		input.setBaslangicIlce(grup.getBaslangicIlce().getDistrictCode());
+		input.setBaslangicUlke(grup.getBaslangicUlke().getCountryName());
 		input.setBaslangicYer(grup.getBaslangicYer());
-		input.setBitisIl(grup.getBitisIl());
-		input.setBitisIlce(grup.getBitisIlce());
-		input.setBitisUlke(grup.getBitisUlke());
+		input.setBitisIl(grup.getBitisIl().getCityCode());
+		input.setBitisIlce(grup.getBitisIlce().getDistrictCode());
+		input.setBitisUlke(grup.getBitisUlke().getCountryName());
 		input.setBitisYer(grup.getBitisYer());
 		input.setGrupAciklama(grup.getGrupAciklama());
 		input.setGrupAdi(grup.getGrupAdi());
 
-		Sefer sefer = seferRepository.findById(seferId).get();
+		Sefer sefer = seferRepository.findById(grup.getSefer().getId()).get();
 		
 		UetdsAriziGrupIslemSonuc sonuc = utils.port.seferGrupEkle(utils.kullaniciBilgileri(), sefer.getUetdsSeferReferansNo(),
 				input);
@@ -57,19 +59,19 @@ public class UdhbGrupServiceImpl implements UdhbGrupService {
 	}
 
 	@Override
-	public String seferGrupGuncelle(Long grupId,  Grup grupDetails) {
+	public String seferGrupGuncelle(Grup grupDetails) {
 		utils.credientials();
 
-		Grup grup = grupRepository.findById(grupId).get();
+		Grup grup = grupRepository.findById(grupDetails.getId()).get();
 
 		UetdsAriziGrupBilgileriInput input = new UetdsAriziGrupBilgileriInput();
-		input.setBaslangicIl(grupDetails.getBaslangicIl());
-		input.setBaslangicIlce(grupDetails.getBaslangicIlce());
-		input.setBaslangicUlke(grupDetails.getBaslangicUlke());
+		input.setBaslangicIl(grupDetails.getBaslangicIl().getCityCode());
+		input.setBaslangicIlce(grupDetails.getBaslangicIlce().getDistrictCode());
+		input.setBaslangicUlke(grupDetails.getBaslangicUlke().getCountryName());
 		input.setBaslangicYer(grupDetails.getBaslangicYer());
-		input.setBitisIl(grupDetails.getBitisIl());
-		input.setBitisIlce(grupDetails.getBitisIlce());
-		input.setBitisUlke(grupDetails.getBitisUlke());
+		input.setBitisIl(grupDetails.getBitisIl().getCityCode());
+		input.setBitisIlce(grupDetails.getBitisIlce().getDistrictCode());
+		input.setBitisUlke(grupDetails.getBitisUlke().getCountryName());
 		input.setBitisYer(grupDetails.getBitisYer());
 		input.setGrupAciklama(grupDetails.getGrupAciklama());
 		input.setGrupAdi(grupDetails.getGrupAdi());
@@ -96,6 +98,11 @@ public class UdhbGrupServiceImpl implements UdhbGrupService {
 	@Override
 	public Grup grupEkle(Grup grup) {
 		return grupRepository.save(grup);
+	}
+
+	@Override
+	public List<Grup> getAllGrup() {
+		return grupRepository.findAll();
 	}
 
 

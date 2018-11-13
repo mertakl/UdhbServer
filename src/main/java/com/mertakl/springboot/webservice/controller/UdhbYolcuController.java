@@ -3,6 +3,7 @@ package com.mertakl.springboot.webservice.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,53 +29,48 @@ public class UdhbYolcuController {
 	@Autowired
 	UdhbServiceYolcu service;
 
-	@PostMapping("/yolcuGrupEkle")
-	public String yolcuGrupEkle(@RequestParam(value = "grupId") Long grupId, 
-			@RequestParam(value = "yolcuId") Long yolcuId) {
-		return service.yolcuGrupEkle(grupId, yolcuId);
+	@GetMapping("/yolcuGrupEkle")
+	public String yolcuGrupEkle(@RequestParam(value = "yolcuId") Long yolcuId, @RequestParam(value = "grupId") Long grupId) {
+		return service.yolcuGrupEkle(yolcuId, grupId);
 	}
-	
+
 	@GetMapping("/yolcular")
 	public List<Yolcu> getAllYolcu() {
 		return service.getAllYolcu();
 	}
-	
+
 	@GetMapping("/yolcuIptal")
-	public String yolcuIptal(@RequestParam(value = "yolcuId") Long yolcuId,
-			@RequestParam(value = "iptalAciklama") String iptalAciklama,
-			@RequestBody Yolcu yolcu) {
-		return service.yolcuIptal(yolcuId, iptalAciklama, yolcu);
+	public String yolcuIptal(@RequestParam(value = "id") Long id,
+			@RequestParam(value = "iptalAciklama") String iptalAciklama) {
+		return service.yolcuIptal(id, iptalAciklama);
 	}
-	
+
 	@GetMapping("/yolcuIptalUetdsYolcuRefNoIle")
 	public String yolcuIptalUetdsYolcuRefNoIle(@RequestParam(value = "yolcuId") Long yolcuId,
 			@RequestParam(value = "iptalAciklama") String iptalAciklama) {
-		return service.yolcuIptal(yolcuId, iptalAciklama);
+		return service.yolcuIptalUetdsYolcuRefNoIle(yolcuId, iptalAciklama);
 	}
-	
+
 	@PostMapping("/yolcuBagajEkle")
-	public String yolcuBagajEkle(@RequestParam(value = "yolcuId") Long yolcuId,
-			@RequestBody Bagaj bagaj) {
+	public String yolcuBagajEkle(@RequestParam(value = "yolcuId") Long yolcuId, @RequestBody Bagaj bagaj) {
 		return service.yolcuBagajEkle(yolcuId, bagaj);
 	}
-	
+
 	@GetMapping("/yolcuBagajIptal")
-	public String yolcuBagajIptal(@RequestParam(value = "bagajId") Long bagajId,
-			@RequestBody Bagaj bagaj) {
+	public String yolcuBagajIptal(@RequestParam(value = "bagajId") Long bagajId, @RequestBody Bagaj bagaj) {
 		return service.yolcuBagajIptal(bagajId, bagaj);
 	}
-	
+
 	@PutMapping("/yolcu")
-	public Yolcu updateYolcu(@RequestParam(value = "yolcuId") Long yolcuId,
-			@RequestBody Yolcu yolcuDetails) {
-		return service.updateYolcu(yolcuId, yolcuDetails);
+	public Yolcu updateYolcu(@RequestBody Yolcu yolcuDetails) {
+		return service.updateYolcu(yolcuDetails);
 	}
-	
+
 	@DeleteMapping("/yolcuSil")
 	public ResponseEntity<?> yolcuSil(@RequestParam(value = "yolcuId") Long yolcuId) {
 		return service.yolcuSil(yolcuId);
 	}
-	
+
 	@PostMapping("/yolcuEkle")
 	public Yolcu personelEkle(@RequestBody Yolcu yolcu) {
 		return service.yolcuEkle(yolcu);

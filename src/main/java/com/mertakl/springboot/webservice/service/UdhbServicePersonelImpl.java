@@ -41,7 +41,7 @@ public class UdhbServicePersonelImpl implements UdhbServicePersonel {
 		input.setTcKimlikPasaportNo(personel.getTcKimlikPasaportNo());
 		input.setTelefon(input.getTelefon());
 		input.setTurKodu(personel.getTurKodu().getId());
-		input.setUyrukUlke(personel.getUyrukUlke());
+		input.setUyrukUlke(personel.getUyrukUlke().getCountryName());
 
 		List<UetdsAriziSeferPersonelBilgileriInput> inputList = new ArrayList<>();
 		inputList.add(input);
@@ -74,6 +74,7 @@ public class UdhbServicePersonelImpl implements UdhbServicePersonel {
 
 		if (sonuc.getSonucKodu() == 0) {
 			personel.setSefer(null);
+			personelRepository.save(personel);
 			return sonuc.getSonucMesaji();
 		} else {
 			return "An error occured " + sonuc.getSonucMesaji();

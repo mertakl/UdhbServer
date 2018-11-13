@@ -67,6 +67,7 @@ public class UdhbServiceSeferImpl implements UdhbServiceSefer {
 		if (sonuc.getSonucKodu() == 0) {
 			Sefer sefer = seferRepository.findById(id).get();
 			sefer.setDurum(AktifPasif.PASIF);
+			seferRepository.save(sefer);
 			return sonuc.getSonucMesaji();
 		} else {
 			return "Some error occured " + sonuc.getSonucMesaji();
@@ -82,6 +83,7 @@ public class UdhbServiceSeferImpl implements UdhbServiceSefer {
 		if (sonuc.getSonucKodu() == 0) {
 			Sefer sefer = seferRepository.findById(id).get();
 			sefer.setAracPlaka(tasitPlakaNo);
+			seferRepository.save(sefer);
 			return sonuc.getSonucMesaji();
 		} else {
 			return "Some error occured " + sonuc.getSonucMesaji();
@@ -96,6 +98,7 @@ public class UdhbServiceSeferImpl implements UdhbServiceSefer {
 		if (sonuc.getSonucKodu() == 0) {
 			Sefer sefer = seferRepository.findById(id).get();
 			sefer.setDurum(AktifPasif.AKTIF);
+			seferRepository.save(sefer);
 			return sonuc.getSonucMesaji();
 		} else {
 			return "Some error occured " + sonuc.getSonucMesaji();
