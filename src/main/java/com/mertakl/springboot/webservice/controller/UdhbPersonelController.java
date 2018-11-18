@@ -26,7 +26,7 @@ public class UdhbPersonelController {
 	@Autowired
 	UdhbServicePersonel service;
 
-	@PostMapping("/personelSeferEkle")
+	@GetMapping("/personelSeferEkle")
 	public String personelSeferEkle(@RequestParam(value = "seferId") Long seferId,
 			@RequestParam(value = "personelId") Long personelId) {
 		return service.personelSeferEkle(seferId, personelId);
@@ -42,6 +42,17 @@ public class UdhbPersonelController {
 	public List<Personel> getAllPersonel() {
 		return service.getAllPersonel();
 	}
+	
+	@GetMapping("/personelWithSeferId")
+	public List<Personel> getAllPersonelWithSeferId(@RequestParam(value = "seferId") Long seferId) {
+		return service.getAllPersonelWithSeferId(seferId);
+	}
+	
+	@GetMapping("/personelWithoutSeferId")
+	public List<Personel> getAllPersonelWithoutSeferId(@RequestParam(value = "seferId") Long seferId) {
+		return service.getAllPersonelWithoutSeferId(seferId);
+	}
+
 
 	@PutMapping("/personel")
 	public Personel updatePersonel(@RequestParam(value = "personelId") Long personelId,

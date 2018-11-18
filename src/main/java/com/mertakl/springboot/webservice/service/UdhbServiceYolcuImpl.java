@@ -196,5 +196,15 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 		return yolcuRepository.save(yolcu);
 	}
 
+	@Override
+	public List<Yolcu> getYolcuWithGrupId(Long grupId) {
+		return yolcuRepository.findAllByGrupId(grupId);
+	}
+
+	@Override
+	public List<Yolcu> getAllYolcuWithoutGrupId() {
+		return yolcuRepository.findAllWithoutGrupId();
+	}
+
 
 }

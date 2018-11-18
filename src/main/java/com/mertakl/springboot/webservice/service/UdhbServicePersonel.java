@@ -23,4 +23,8 @@ public interface UdhbServicePersonel {
 
 	public Personel personelEkle(Personel personel);
 
+	public List<Personel> getAllPersonelWithSeferId(Long seferId);
+
+	public List<Personel> getAllPersonelWithoutSeferId(Long seferId);
+
 }

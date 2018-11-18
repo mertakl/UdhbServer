@@ -21,15 +21,15 @@ public class User extends DateAudit {
 
 	@NotBlank
 	@Size(max = 40)
-	private String first_name;
-	
+	private String firstName;
+
 	@NotBlank
 	@Size(max = 40)
-	private String last_name;
+	private String lastName;
 
 	@NotBlank
 	@Size(max = 15)
-	private String username;
+	private String userName;
 
 	@NaturalId
 	@NotBlank
@@ -49,12 +49,28 @@ public class User extends DateAudit {
 
 	}
 
-	public User(String first_name, String last_name, String username, String email, String password) {
-		this.first_name = first_name;
-		this.username = username;
+	public User(@NotBlank @Size(max = 40) String firstName, @NotBlank @Size(max = 40) String lastName,
+			@NotBlank @Size(max = 15) String userName, @NotBlank @Size(max = 40) @Email String email,
+			@NotBlank @Size(max = 100) String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
 		this.email = email;
 		this.password = password;
-		this.last_name = last_name;
+	}
+
+	public User(Long id, @NotBlank @Size(max = 40) String firstName, @NotBlank @Size(max = 40) String lastName,
+			@NotBlank @Size(max = 15) String userName, @NotBlank @Size(max = 40) @Email String email,
+			@NotBlank @Size(max = 100) String password, Set<Role> roles) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
 	}
 
 	public Long getId() {
@@ -65,12 +81,28 @@ public class User extends DateAudit {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getEmail() {
@@ -97,21 +129,4 @@ public class User extends DateAudit {
 		this.roles = roles;
 	}
 
-	public String getFirst_name() {
-		return first_name;
-	}
-
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
-	}
-
-	public String getLast_name() {
-		return last_name;
-	}
-
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
-	}
-
-	
 }

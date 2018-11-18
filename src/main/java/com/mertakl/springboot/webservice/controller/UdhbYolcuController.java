@@ -30,13 +30,24 @@ public class UdhbYolcuController {
 	UdhbServiceYolcu service;
 
 	@GetMapping("/yolcuGrupEkle")
-	public String yolcuGrupEkle(@RequestParam(value = "yolcuId") Long yolcuId, @RequestParam(value = "grupId") Long grupId) {
+	public String yolcuGrupEkle(@RequestParam(value = "yolcuId") Long yolcuId,
+			@RequestParam(value = "grupId") Long grupId) {
 		return service.yolcuGrupEkle(yolcuId, grupId);
 	}
 
 	@GetMapping("/yolcular")
 	public List<Yolcu> getAllYolcu() {
 		return service.getAllYolcu();
+	}
+
+	@GetMapping("/getYolcuWithGrupId")
+	public List<Yolcu> getYolcuWithGrupId(@RequestParam(value = "grupId") Long grupId) {
+		return service.getYolcuWithGrupId(grupId);
+	}
+
+	@GetMapping("/getAllYolcuWithoutGrupId")
+	public List<Yolcu> getAllYolcuWithoutGrupId() {
+		return service.getAllYolcuWithoutGrupId();
 	}
 
 	@GetMapping("/yolcuIptal")

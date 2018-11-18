@@ -2,11 +2,20 @@ package com.mertakl.springboot.webservice.util;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.BindingProvider;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mertakl.springboot.webservice.controller.UdhbKullaniciController;
+import com.mertakl.springboot.webservice.model.UdhbKullanici;
+import com.mertakl.springboot.webservice.repository.UdhbKullaniciRepository;
 
 import tr.gov.udhb.unetws.uetds.UdhbUetdsAriziService;
 import tr.gov.udhb.unetws.uetds.UdhbUetdsAriziService_Service;
@@ -19,7 +28,7 @@ public class UdhbUtils {
 	public UdhbUetdsAriziService port = service.getUdhbUetdsAriziServicePort();
 
 	public Map<String, Object> credientials() {
-
+		
 		BindingProvider bp = (BindingProvider) port;
 
 		Map<String, Object> map = bp.getRequestContext();

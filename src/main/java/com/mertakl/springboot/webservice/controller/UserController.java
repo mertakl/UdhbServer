@@ -43,7 +43,7 @@ public class UserController {
 	 */
 	@GetMapping("/user/checkUsernameAvailability")
 	public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
-		Boolean isAvailable = !userRepository.existsByUsername(username);
+		Boolean isAvailable = !userRepository.existsByUserName(username);
 		return new UserIdentityAvailability(isAvailable);
 	}
 
@@ -62,11 +62,11 @@ public class UserController {
 	@GetMapping("/users/{username}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
-		User user = userRepository.findByUsername(username)
+		User user = userRepository.findByUserName(username)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-		UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getFirst_name(),
-				user.getLast_name(), user.getCreatedAt());
+		UserProfile userProfile = new UserProfile(user.getId(), user.getUserName(), user.getFirstName(),
+				user.getLastName(), user.getCreatedAt());
 
 		return userProfile;
 	}

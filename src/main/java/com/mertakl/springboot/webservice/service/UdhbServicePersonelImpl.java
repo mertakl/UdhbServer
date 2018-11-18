@@ -115,4 +115,14 @@ public class UdhbServicePersonelImpl implements UdhbServicePersonel {
 		return personelRepository.save(personel);
 	}
 
+	@Override
+	public List<Personel> getAllPersonelWithSeferId(Long seferId) {
+		return personelRepository.findAllBySeferId(seferId);
+	}
+
+	@Override
+	public List<Personel> getAllPersonelWithoutSeferId(Long seferId) {
+		return personelRepository.getAllPersonelWithoutSeferId(seferId);
+	}
+
 }

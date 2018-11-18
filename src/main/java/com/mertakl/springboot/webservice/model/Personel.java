@@ -21,7 +21,7 @@ public class Personel extends UserDateAudit {
 	@NotNull
 	private PersonelTuru turKodu;
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Country uyrukUlke;
 
 	@NotNull
@@ -47,7 +47,7 @@ public class Personel extends UserDateAudit {
 	@Size(max = 200)
 	private String adres;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "personel_sefer", joinColumns = @JoinColumn(name = "personel_id"), inverseJoinColumns = @JoinColumn(name = "sefer_id"))
 	private Sefer sefer;
 

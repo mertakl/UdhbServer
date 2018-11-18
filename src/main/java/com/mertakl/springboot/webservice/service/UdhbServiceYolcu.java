@@ -30,5 +30,9 @@ public interface UdhbServiceYolcu {
 
 	public Yolcu yolcuEkle(Yolcu yolcu);
 
+	public List<Yolcu> getYolcuWithGrupId(Long grupId);
+
+	public List<Yolcu> getAllYolcuWithoutGrupId();
+
 
 }

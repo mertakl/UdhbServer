@@ -35,9 +35,9 @@ public class UdhbKullaniciController {
 
  
 	@PutMapping("/udhbKullanici/{id}")
-	public ResponseEntity<UdhbKullanici> updateUdhbKullanici(@PathVariable("id") Long id, @RequestBody UdhbKullanici kullanici) {
+	public ResponseEntity<UdhbKullanici> updateUdhbKullanici(@RequestBody UdhbKullanici kullanici) {
  
-		Optional<UdhbKullanici> kullaniciData = udhbKullaniciRepository.findById(id);
+		Optional<UdhbKullanici> kullaniciData = udhbKullaniciRepository.findById(kullanici.getId());
  
 		if (kullaniciData.isPresent()) {
 			UdhbKullanici _kullanici = kullaniciData.get();
