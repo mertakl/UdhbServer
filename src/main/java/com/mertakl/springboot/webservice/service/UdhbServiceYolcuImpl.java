@@ -146,13 +146,13 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 	}
 
 	@Override
-	public String yolcuBagajIptal(Long bagajId, Bagaj bagajDetails) {
+	public String yolcuBagajIptal(Long bagajId) {
 		utils.credientials();
 		Bagaj bagaj = bagajRepository.findById(bagajId).get();
 		UetdsSeferBagajBilgileriInput input = new UetdsSeferBagajBilgileriInput();
 		input.setKoltukNo(bagaj.getYolcu().getKoltukNo());
 		input.setYolcuTCKimlikPasaportNo(bagaj.getYolcu().getTcKimlikPasaportNo());
-		input.getBagajBarkodNumaralari().addAll(bagajDetails.getBagajBarkodNumaralari());
+		input.getBagajBarkodNumaralari().addAll(bagaj.getBagajBarkodNumaralari());
 
 		UetdsGenelIslemSonuc sonuc = utils.port.yolcuBagajIptal(utils.kullaniciBilgileri(),
 				bagaj.getYolcu().getGrup().getSefer().getUetdsSeferReferansNo(), input);
@@ -204,6 +204,11 @@ public class UdhbServiceYolcuImpl implements UdhbServiceYolcu {
 	@Override
 	public List<Yolcu> getAllYolcuWithoutGrupId() {
 		return yolcuRepository.findAllWithoutGrupId();
+	}
+
+	@Override
+	public List<String> getBagajWithYolcuId(Long yolcuId) {
+		return bagajRepository.findAllByYolcuId(yolcuId);
 	}
 
 

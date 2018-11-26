@@ -67,9 +67,9 @@ public class UdhbYolcuController {
 		return service.yolcuBagajEkle(yolcuId, bagaj);
 	}
 
-	@GetMapping("/yolcuBagajIptal")
-	public String yolcuBagajIptal(@RequestParam(value = "bagajId") Long bagajId, @RequestBody Bagaj bagaj) {
-		return service.yolcuBagajIptal(bagajId, bagaj);
+	@DeleteMapping("/yolcuBagajIptal")
+	public String yolcuBagajIptal(@RequestParam(value = "bagajId") Long bagajId) {
+		return service.yolcuBagajIptal(bagajId);
 	}
 
 	@PutMapping("/yolcu")
@@ -85,5 +85,10 @@ public class UdhbYolcuController {
 	@PostMapping("/yolcuEkle")
 	public Yolcu personelEkle(@RequestBody Yolcu yolcu) {
 		return service.yolcuEkle(yolcu);
+	}
+	
+	@GetMapping("/getBagajWithYolcuId")
+	public List<String> getBagajWithYolcuId(@RequestParam(value = "yolcuId") Long yolcuId) {
+		return service.getBagajWithYolcuId(yolcuId);
 	}
 }

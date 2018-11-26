@@ -1,8 +1,13 @@
 package com.mertakl.springboot.webservice.payload;
 
+import java.util.Set;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.mertakl.springboot.webservice.enums.RoleName;
+import com.mertakl.springboot.webservice.model.Role;
 
 public class SignUpRequest {
 	@NotBlank
@@ -25,6 +30,8 @@ public class SignUpRequest {
 	@NotBlank
 	@Size(min = 6, max = 20)
 	private String password;
+
+	private RoleName roles;
 
 	public String getFirstName() {
 		return firstName;
@@ -65,4 +72,13 @@ public class SignUpRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public RoleName getRoles() {
+		return roles;
+	}
+
+	public void setRoles(RoleName roles) {
+		this.roles = roles;
+	}
+
 }

@@ -22,7 +22,7 @@ public interface UdhbServiceYolcu {
 
 	public String yolcuBagajEkle(Long yolcuId, Bagaj bagaj);
 
-	public String yolcuBagajIptal(Long bagajId, Bagaj bagaj);
+	public String yolcuBagajIptal(Long bagajId);
 
 	public Yolcu updateYolcu(Yolcu yolcuDetails);
 
@@ -34,5 +34,6 @@ public interface UdhbServiceYolcu {
 
 	public List<Yolcu> getAllYolcuWithoutGrupId();
 
+	public List<String> getBagajWithYolcuId(Long yolcuId);
 
 }
